@@ -4,6 +4,7 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+autopep8 = "*"
 
 [packages]
 flask = "*"
@@ -11,7 +12,7 @@ flake8 = "*"
 autopep8 = "*"
 pytelegrambotapi = "*"
 python-dotenv = "*"
-python-pixabay = "*"
+requests = "*"
 
 [requires]
 python_version = "3.8"
