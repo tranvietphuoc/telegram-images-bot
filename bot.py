@@ -4,8 +4,6 @@ from utils import BOT_TOKEN, PROJECT_NAME
 
 
 bot = telebot.TeleBot(BOT_TOKEN, threaded=True)
-# configure webhook for the bot, with the url of the Glitch project
-bot.set_webhook(f"https://{PROJECT_NAME}.glitch.me/{BOT_TOKEN}")
 
 
 @bot.message_handler(commands=['start'])
@@ -21,4 +19,7 @@ def send_random_4k_photo(message):
                       caption='rename_to_jpeg')
 
 
+
+# configure webhook for the bot, with the url of the Glitch project
+bot.set_webhook(f"https://{PROJECT_NAME}.glitch.me/{BOT_TOKEN}")
 bot.polling()

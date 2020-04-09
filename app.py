@@ -20,5 +20,4 @@ def webhook():
     return abort(403)
 
 
-if __name__ == '__main__':
-    app.run(port=PORT, debug=True)
+
