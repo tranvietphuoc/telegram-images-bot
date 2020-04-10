@@ -1,7 +1,6 @@
 from flask import Flask, request, abort
 import telebot
 from bot import bot
-from utils import PORT
 
 
 app = Flask(__name__)
@@ -9,7 +8,7 @@ WEBHOOK_URL = f"/{bot.token}"
 
 
 # Webserver webhook route
-@app.route('/WEBHOOK_URL', methods=['GET'])
+@app.route(WEBHOOK_URL, methods=['POST'])
 def webhook():
     """Check if the verify token is correct"""
     if request.headers.get('content-type') == 'application/json':
