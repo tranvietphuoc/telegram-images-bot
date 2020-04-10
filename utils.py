@@ -1,6 +1,7 @@
 from dotenv import load_dotenv
 import os
 import requests
+from datetime import datetime
 
 
 app_root = os.path.join(os.path.dirname(__file__), '.')
@@ -20,6 +21,8 @@ def request_image(keyword: str):
     """Get the response from api.unsplash.com follow keyword"""
     payload = {
             "query": keyword,
+            "page": 8,
+            "per_page": 20,
             "client_id": UNSPLASH_ACCESS_KEY
         }
     return requests.get(UNSPLASH_SEARCH_PHOTO_API, params=payload)
@@ -33,3 +36,8 @@ def request_image(keyword: str):
 #         photos.append(result['urls']['regular'])
 #     return photos
 
+def log_to_file(message: str):
+    with open(os.path.join(app_root, 'work.log'), 'a') as f:
+        f.write(datetime.utcnow().strftime('%d-%b-%Y (%H:%M:%S.%f)'))
+        f.write(message)
+        f.flush()

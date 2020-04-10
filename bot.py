@@ -13,29 +13,34 @@ def send_welcome(message):
     itembtn = telebot.types.KeyboardButton('/teddy')
     markup.add(itembtn)
     bot.reply_to(message, "Hi there, welcome to my bot!")
-    bot.send_message(message.chat.id, "Click the button: /teddy bellow", reply_markup=markup)
-
-
-@bot.message_handler(func=lambda message: True)
-def echo_all(message):
-    bot.reply_to(message, message.text)
+    bot.send_message(
+        message.chat.id, "Click the button: /teddy bellow", reply_markup=markup)
 
 
 @bot.message_handler(commands=['teddy'])
 def send_response(message):
+    # First, read the chat information
+    chat_info = bot.get_chat(message.chat.id)
+    print(chat_info)
     # Hide a previously sent ReplyKeyboardMarkup
     # markup = telebot.types.ReplyKeyboardRemove(selective=True)
     # Get random teddy photo from unsplash
     # response = requests.get('https://source.unsplash.com/')
-    resp = request_image(message).json()
+    resp = request_image('teddy bear').json()
     results = resp['results']
     photos = []
     for result in results:
         photos.append(result['urls']['regular'])
-    # choose random photo from list of photos
-    choice = random.randint(0, len(photos))
+    # log(len(photos))
+    # choose random element from photos list
+    choose = random.choice(photos)
+    # choice = random.randint(0, len(photos)-1)
+    bot.send_message(message.chat.id, choose)
 
-    bot.send_message(message.chat.id, photos[choice])
+
+# @bot.message_handler(func=lambda message: True)
+# def echo_all(message):
+#     bot.reply_to(message, message.text)
 
 
 # @bot.message_handler(commands=['4k'])
@@ -49,4 +54,3 @@ def send_response(message):
 time.sleep(1)
 # configure webhook for the bot, with the url of the Glitch project
 bot.set_webhook(f"https://{PROJECT_NAME}.glitch.me/{BOT_TOKEN}")
-bot.polling()
