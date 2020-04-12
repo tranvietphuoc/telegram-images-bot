@@ -53,4 +53,4 @@ def send_response(message):
 
 time.sleep(1)
 # configure webhook for the bot, with the url of the Glitch project
-bot.set_webhook(f"https://{PROJECT_NAME}.glitch.me/{BOT_TOKEN}")
+bot.set_webhook(f"https://{PROJECT_NAME}.glitch.me/{bot.token}")
