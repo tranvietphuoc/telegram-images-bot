@@ -10,11 +10,13 @@ bot = telebot.TeleBot(BOT_TOKEN, threaded=True)
 @bot.message_handler(commands=['start', 'help'])
 def send_welcome(message):
     """When start the bot or /help is typed. It sends a ReplyKeyboardMarkup to user"""
-    markup = telebot.types.ReplyKeyboardMarkup(row_width=2)
+    markup = telebot.types.ReplyKeyboardMarkup()
     teddybtn = telebot.types.KeyboardButton('Teddy')
     dogbtn = telebot.types.KeyboardButton('Dog')
     catbtn = telebot.types.KeyboardButton('Cat')
-    markup.add(teddybtn, dogbtn, catbtn)
+    flowerbtn = telebot.types.KeyboardButton('Flower')
+    markup.row(teddybtn, flower)
+    markup.row(dogbtn, catbtn)
     bot.reply_to(message, "Hi there, welcome to my bot!")
     bot.send_message(message.chat.id,
                      "Click one button to choose one object that you want to get images",
