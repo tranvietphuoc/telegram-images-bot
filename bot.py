@@ -1,7 +1,6 @@
 import telebot
-from utils import BOT_TOKEN, PROJECT_NAME, request_image
+from utils import BOT_TOKEN, PROJECT_NAME, request_image, filter_images
 import time
-import re
 import random
 
 
@@ -14,8 +13,8 @@ def send_welcome(message):
     itembtn = telebot.types.KeyboardButton('Teddy')
     markup.add(itembtn)
     bot.reply_to(message, "Hi there, welcome to my bot!")
-    bot.send_message(message.chat.id,
-                     "Click the button: Teddy bellow", reply_markup=markup)
+    bot.send_message(
+        message.chat.id, "Click the button: Teddy bellow", reply_markup=markup)
 
 
 @bot.message_handler(regexp=r'(Teddy)+')
@@ -28,10 +27,12 @@ def send_response(message):
     # Get random teddy photo from unsplash
     # response = requests.get('https://source.unsplash.com/')
     resp = request_image('teddy bear').json()
-    results = resp['results']
-    photos = []
+    results = resp['hits']
+    list_images = []
     for result in results:
-        photos.append(result['urls']['regular'])
+        list_images.append(result['largeImageURL'])
+
+    photos = filter_images(list_images)
     # log(len(photos))
     # choose random element from photos list
     choose = random.choice(photos)
