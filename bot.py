@@ -37,7 +37,8 @@ def send_response(message):
     # choose random element from photos list
     choose = random.choice(photos)
     # choice = random.randint(0, len(photos)-1)
-    bot.send_message(message.chat.id, choose)
+    # bot.send_message(message.chat.id, choose)
+    bot.send_photo(message.chat.id, choose)
 
 
 # @bot.message_handler(func=lambda message: True)
