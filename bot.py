@@ -10,14 +10,17 @@ bot = telebot.TeleBot(BOT_TOKEN, threaded=True)
 @bot.message_handler(commands=['start', 'help'])
 def send_welcome(message):
     markup = telebot.types.ReplyKeyboardMarkup(row_width=2)
-    itembtn = telebot.types.KeyboardButton('Teddy')
-    markup.add(itembtn)
+    teddybtn = telebot.types.KeyboardButton('Teddy')
+    dogbtn = telebot.types.KeyboardButton('Dog')
+    catbtn = telebot.types.KeyboardButton('Cat')
+    markup.add(teddybtn, dogbtn, catbtn)
     bot.reply_to(message, "Hi there, welcome to my bot!")
-    bot.send_message(
-        message.chat.id, "Click the button: Teddy bellow", reply_markup=markup)
+    bot.send_message(message.chat.id,
+                     "Click one button to choose one object that you want to get images",
+                     reply_markup=markup)
 
 
-@bot.message_handler(regexp=r'(Teddy)+')
+@bot.message_handler(regexp=r'(Teddy|Dog|Cat)+')
 def send_response(message):
     # First, read the chat information
     chat_info = bot.get_chat(message.chat.id)
@@ -26,11 +29,11 @@ def send_response(message):
     # markup = telebot.types.ReplyKeyboardRemove(selective=True)
     # Get random teddy photo from unsplash
     # response = requests.get('https://source.unsplash.com/')
-    resp = request_image('teddy bear').json()
+    resp = request_image(message.text).json()
     results = resp['hits']
     list_images = []
     for result in results:
-        list_images.append(result['largeImageURL'])
+      list_images.append(result['largeImageURL'])
 
     photos = filter_images(list_images)
     # log(len(photos))
