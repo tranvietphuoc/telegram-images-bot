@@ -1,6 +1,7 @@
 import telebot
 from utils import BOT_TOKEN, PROJECT_NAME, request_image
 import time
+import re
 import random
 
 
@@ -10,14 +11,14 @@ bot = telebot.TeleBot(BOT_TOKEN, threaded=True)
 @bot.message_handler(commands=['start', 'help'])
 def send_welcome(message):
     markup = telebot.types.ReplyKeyboardMarkup(row_width=2)
-    itembtn = telebot.types.KeyboardButton('/teddy')
+    itembtn = telebot.types.KeyboardButton('Teddy')
     markup.add(itembtn)
     bot.reply_to(message, "Hi there, welcome to my bot!")
-    bot.send_message(
-        message.chat.id, "Click the button: /teddy bellow", reply_markup=markup)
+    bot.send_message(message.chat.id,
+                     "Click the button: Teddy bellow", reply_markup=markup)
 
 
-@bot.message_handler(commands=['teddy'])
+@bot.message_handler(regexp=r'(Teddy)+')
 def send_response(message):
     # First, read the chat information
     chat_info = bot.get_chat(message.chat.id)
