@@ -15,7 +15,7 @@ def send_welcome(message):
     dogbtn = telebot.types.KeyboardButton('Dog')
     catbtn = telebot.types.KeyboardButton('Cat')
     flowerbtn = telebot.types.KeyboardButton('Flower')
-    markup.row(teddybtn, flower)
+    markup.row(teddybtn, flowerbtn)
     markup.row(dogbtn, catbtn)
     bot.reply_to(message, "Hi there, welcome to my bot!")
     bot.send_message(message.chat.id,
@@ -23,7 +23,7 @@ def send_welcome(message):
                      reply_markup=markup)
 
 
-@bot.message_handler(regexp=r'(Teddy|Dog|Cat)+')
+@bot.message_handler(regexp=r'(Teddy|Dog|Cat|Flower)+')
 def send_response(message):
     # First, read the chat information
     chat_info = bot.get_chat(message.chat.id)
